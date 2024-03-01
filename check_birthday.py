@@ -30,12 +30,14 @@ def main():
 
 	is_leapie = check_leap(int(b_year)) and is_feb_29(int(b_month), int(b_day))
 	
-	#  message for leapie
+	#  birthday message
 	if (is_leapie and is_leap_year):
-		print("Happy Birthday Leapie")
+		# message for leapie
+		print("\n**** Nandgeek says, 'Happy Birthday Leapie!' ****\n")
 	elif is_birthday(int(b_month), int(b_day)):
-		print("Happy birthday")
+		# regular birthday message
+		print("\n**** Nandgeek says, 'Happy birthday!' ****\n")
 	else:
-		print("Wait for your birthday!")
+		print("\nSorry, today is not your birthday!\n")
 if __name__ == "__main__":
 	main()
