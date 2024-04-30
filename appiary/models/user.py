@@ -4,8 +4,6 @@ from base_model import BaseModel
 from datetime import datetime
 
 
-
-
 class User(BaseModel):
     def __init__(self, first_name="", last_name="", yob=0):
         super().__init__()
@@ -17,6 +15,7 @@ class User(BaseModel):
 
     @property
     def age(self):
+        """create age property from yob and current year"""
         current_year = datetime.now().year
         if self.yob > 0 and (current_year - self.yob) > 1:
             return current_year - self.yob
@@ -24,6 +23,7 @@ class User(BaseModel):
             return 0
 
     def view_profile(self):
+        """show user information"""
         user_info = {}
         for key, value in self.__dict__.items():
             if key not in ['id', 'updated_at', '__class__']:
@@ -33,7 +33,6 @@ class User(BaseModel):
                 user_info[key] = value
         user_info['age'] = self.age
         return user_info
-
 
 
 if __name__ == "__main__":
