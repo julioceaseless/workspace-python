@@ -6,10 +6,13 @@ from models.beehive import Beehive
 from models.apiary import Apiary
 from models.inspection import Inspection
 from models.user import User
+from models.harvest import Harvest
+
+
 
 classes = {
         'BaseModel': BaseModel, 'Apiary': Apiary, 'User': User, 
-        'Inspection': Inspection, 'Beehive': Beehive
+        'Inspection': Inspection, 'Beehive': Beehive, 'Harvest':Harvest
         }
 
 class FileStorage:
@@ -46,12 +49,9 @@ class FileStorage:
     def reload(self):
         """load objects from json file"""
         try:
-            temp = {}
             with open(FileStorage.__file_path, 'r', encoding="UTF-8") as f:
                 temp = json.load(f)
-                for key, value in temp.items():
-                    value = classes[value["__class__"]](**value)
-                    FileStorage.__objects[key] = value
+                FileStorage.__objects.update(temp)
         except FileNotFoundError:
             pass
 
@@ -62,3 +62,6 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             del FileStorage.__objects[key]
 
+
+if __name__ == "__main__":
+    filestorage = FileStorage()

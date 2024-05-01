@@ -2,8 +2,8 @@
 """Harvests"""
 
 from datetime import datetime
-from base_model import BaseModel
-from beehive import Beehive
+from models.base_model import BaseModel
+from models.beehive import Beehive
 
 class Harvest(BaseModel):
     """ record honey harvests"""

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Create an Apiary"""
-from base_model import BaseModel
-from beehive import Beehive
-from user import User
+from models.base_model import BaseModel
+from models.beehive import Beehive
+from models.user import User
 
 
 class Apiary(BaseModel):

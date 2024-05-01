@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Create an Apiary"""
-from base_model import BaseModel
+from models.base_model import BaseModel
 
 class Beehive(BaseModel):
     """define an apiary"""
