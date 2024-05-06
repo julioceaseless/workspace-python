@@ -23,6 +23,9 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of objects"""
         if cls is not None:
+            if not isinstance(cls, str):
+                # retrieve class name
+                cls = cls.__name__
             filtered_objs = {}
             for key, value in FileStorage.__objects.items():
                 if cls == value.__class__.__name__:
@@ -51,15 +54,20 @@ class FileStorage:
         """deserialize JSON data to objects"""
         try:
             with open(FileStorage.__file_path, 'r', encoding="UTF-8") as f:
+                # retrieve json objects from file
                 j_objs = json.load(f)
                 for key, value in j_objs.items():
+                    # get class name for each object
                     obj_cls_name = value.get("__class__")
                     if obj_cls_name:
+                        # retrieve the class
                         obj_class = classes.get(obj_cls_name)
                         if obj_class:
-                            ignore_keys = ["id, created_at, updated_at"]
-                            obj_attr = {k: v for k, v in value.items() if k not in ignore_keys}
-                            obj_instance = obj_class()
+                            # create key-value pairs of attributes for each object
+                            obj_attr = {k: v for k, v in value.items()}
+                            # recreate an instance
+                            obj_instance = obj_class(**obj_attr)
+                            # store the instance
                             FileStorage.__objects[key] = obj_instance
                         else:
                             print(f"class {obj_cls_name} not found")
@@ -69,12 +77,16 @@ class FileStorage:
             pass
 
 
-    def delete(self, obj):
-        """delete object"""
-        if obj is not None:
+    def delete(self, id):
+        """delete object by UUID passed as argument"""
+        if id is not None:
             # create key
-            key = obj.__class__.__name__ + "." + obj.id
-            FileStorage.__objects.pop(key)
+            delete_keys = []
+            for key in FileStorage.__objects:
+                if key.split('.')[1] == id:
+                    delete_keys.append(key)
+            for key in delete_keys:
+                FileStorage.__objects.pop(key)
 
 
     def get(self, cls_name, id):
@@ -82,12 +94,10 @@ class FileStorage:
         if cls_name:
             cls = classes.get(cls_name)
             if cls:
-                all_objects = FileStorage.all(cls)
+                all_objects = self.all(cls)
                 for key in all_objects:
                     if (key.split('.')[1] == id):
-                        print(key)
-                        print(all_objects[key])
-                        return all_objects[key]
+                        return all_objects.get(key)
         return None
 
 

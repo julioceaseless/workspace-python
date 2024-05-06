@@ -7,23 +7,24 @@ from models.user import User
 
 class Apiary(BaseModel):
     """define an apiary"""
-    def __init__(self, name, location, user):
-        super().__init__()
-        self.name = name
-        self.location = location
-        self.user = user
-        self.county = ""
-        self.town = ""
-        self.vegetation = []
-        self.beehives = []
-
-    def add_beehive(self, obj):
-        """add beehive to apiary"""
-        if not isinstance(obj, Beehive):
-            raise TypeError("Expects a beehive object")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if kwargs:
+            # when loading from database
+            if kwargs.get('name'):
+                self.name = kwargs.get('name')
+            if kwargs.get('location'):
+                self.location = kwargs.get('location')
+            if kwargs.get('user'):
+                self.user = kwargs.get('user')
+            if kwargs.get('county'):
+                self.county = kwargs.get('county')
+            if kwargs.get('town'):
+                self.town = kwargs.get('town', "")
         else:
-            self.beehives.append(obj.to_dict())
-
+            self.name = ""
+            self.location = ""
+            self.user = ""
 
 
 if __name__ == "__main__":
