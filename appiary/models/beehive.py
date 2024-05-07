@@ -1,25 +1,22 @@
 #!/usr/bin/python3
 """ Create an Apiary"""
 from models.base_model import BaseModel
+import models
 
 class Beehive(BaseModel):
     """define an apiary"""
     count = 0
 
-    def __init__(self, apiary):
+    def __init__(self, *args, **kwargs):
         """initialize beehive"""
-        super().__init__()
-        self.id = Beehive.count
+        super().__init__(*args, **kwargs)
+        self.id = str(Beehive.count)
         Beehive.count += 1
-
-        self.apiary_id = apiary.id
-        self.type_of_hive = ""
-        self.color = ""
-        self.type_of_wood = ""
-        self.num_of_frames = 0
+        self.apiary_id = kwargs.get('apiary_id')
         self.ready_for_harvest = False
         self.inspections = []
         self.harvests = []
+    
 
     def add_inspection(self, inspection):
         """record inspections"""

@@ -4,11 +4,11 @@ from models.base_model import BaseModel
 from datetime import datetime
 
 class User(BaseModel):
-    def __init__(self, first_name="", last_name="", yob=0):
-        super().__init__()
-        self.first_name = first_name
-        self.last_name = last_name
-        self.yob = int(yob)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.first_name = kwargs.get("first_name")
+        self.last_name = kwargs.get("last_name")
+        self.yob = int(kwargs.get("yob"))
     about = ""
 
 

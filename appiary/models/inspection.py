@@ -6,10 +6,10 @@ from datetime import datetime
 
 class Inspection(BaseModel):
     """ harvests management"""
-    def __init__(self, beehive_id, notes):
-        super().__init__()
-        self.beehive_id = beehive_id
-        self.notes = notes
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.beehive_id = kwargs.get('beehive_id')
+        self.notes = kwargs.get('notes')
 
 
     def update_notes(self, update_text):
