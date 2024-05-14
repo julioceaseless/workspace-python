@@ -14,6 +14,7 @@ class Beehive(BaseModel):
         Beehive.count += 1
         self.apiary_id = kwargs.get('apiary_id')
         self.ready_for_harvest = False
+        self.next_harvest_date = "TBD"
         self.inspections = []
         self.harvests = []
     

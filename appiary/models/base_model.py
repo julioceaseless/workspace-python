@@ -52,6 +52,6 @@ class BaseModel:
                                      self.id, self.to_dict())
 
     
-    def save(self):
+    def update(self):
         """save and update 'updated_at' the time to current time"""
         self.updated_at = datetime.utcnow()
